@@ -54,8 +54,8 @@ Algoritmo Banco
 	Ahorros[4]<-4500000
 	Corrientes[4]<-4800000
 	
-	salir<-'s'
-	Mientras salir != 'n' Hacer
+	salir<-'n'
+	Mientras salir != 's' Hacer
 		Imprimir "Banco Moña, Banco Universal"
 		intento<-1
 		Mientras intento < 3 Hacer
@@ -109,14 +109,123 @@ Algoritmo Banco
 						Segun opc Hacer
 							1:
 								Imprimir "Menú Consultas"
-								Imprimir "Nombre: " , Nombres[i] , "			" , "Cédula: " , ID[i] 
-								Imprimir "Saldo de Cuentas de Ahorros: " , Ahorros[i]
-								Imprimir "Saldo de Cuentas Corrientes: " , Corrientes[i]
-								
+								Imprimir "Esta operacion cobrara una comision de 0.007 % de la cuenta la cual va a consultar"
+								Escribir "¿Desea Continuar? [S/N]"
+								Leer consulta
+								Si consulta = 'S' Entonces
+									Escribir "Seleccione cuenta la cual va a consultar"
+									Imprimir "1 - Cuenta de Ahorros"
+									Imprimir "2 - Cuenta Corriente"
+									leer cuenta
+									Segun cuenta Hacer
+										1:
+											Imprimir "Cliente: " , Nombres[i] , "     " , "Cédula: " , ID[i]
+											total<-Ahorros[i] - (Ahorros[i] * 0.0007)
+											Imprimir "Saldo de Cuentas de Ahorros: " , total
+											Escribir "¿Desea realizar otra consulta? [S/N]"
+											leer consulta
+										2:
+											Imprimir "Cliente: " , Nombres[i] , "    " , "Cédula: " , ID[i]
+											total<-Corrientes[i] - (Corrientes[i] * 0.0007)
+											Imprimir "Saldo de Cuentas Corrientes: " , total
+											Escribir "¿Desea realizar otra consulta? [S/N]"
+											leer consulta
+										De Otro Modo:
+										Imprimir "Opcion invalida"
+									Fin Segun
+								FinSi
 							2:
 								Imprimir "Menú Deposito"
+								Escribir "Seleccione la cuenta la cual va a depositar"
+								Imprimir "1 - Cuenta Corriente"
+								Imprimir "2 - Cuenta de ahorro"
+								leer cuenta
+								Segun cuenta Hacer
+									1:
+										Imprimir "Cliente: " , Nombres[i] , "			" , "Cédula: " , ID[i]
+										Escribir "Introduzca el monto el cual va a depositar"
+										Leer monto
+										total<-monto + Corrientes[i]
+										Corrientes[i]<-total
+										Imprimir "Operacion Exitosa"
+										Imprimir "Su saldo actual en Su Cuenta Corriente es: " Corrientes[i]
+										Escribir "¿Desea realizar otro deposito? [S/N]"
+										leer consulta
+										si consulta = 'S' entonces
+											Escribir "Seleccione la cuenta la cual va a depositar"
+											Imprimir "1 - Cuenta Corriente"
+											Imprimir "2 - Cuenta de ahorro"
+											leer cuenta
+										SiNo
+											Imprimir "Saliendo"
+											salir<-'s'
+										FinSi
+									2:
+										Imprimir "Cliente: " , Nombres[i] , "				" , "Cédula: " , ID[i]
+										Escribir "Introduzca el monto el cual va a depositar"
+										Leer monto
+										total<-monto + Ahorros[i]
+										Corrientes[i]<-total
+										Imprimir "Operacion Exitosa"
+										Imprimir "Su saldo actual en Su Cuenta de Ahorro es: " Ahorros[i]
+										Escribir "¿Desea realizar otro deposito? [S/N]"
+										leer consulta
+										si consulta = 'S' entonces
+											Escribir "Seleccione la cuenta la cual va a depositar"
+											Imprimir "1 - Cuenta Corriente"
+											Imprimir "2 - Cuenta de ahorro"
+											leer cuenta
+										SiNo
+											Imprimir "Saliendo"
+											salir<-'s'
+										FinSi
+									De Otro Modo:
+										Imprimir "Opcion Invalida"
+								Fin Segun
 							3:
 								Imprimir "Menú Retiro"
+								Imprimir "Esta operacion cobrara una comision de 0.003 % de la cuenta la cual va a consultar"
+								Escribir "¿Desea Continuar? [S/N]"
+								Leer consulta
+								Si consulta = 'S' Entonces
+									Escribir "Seleccione cuenta la cual va a consultar"
+									Imprimir "1 - Cuenta corriente"
+									Imprimir "2 - Cuenta de Ahorros"
+									leer cuenta
+									Segun cuenta Hacer
+										1:
+											Imprimir "Cliente: " , Nombres[i] , "			" , "Cédula: " , ID[i]
+											Escribir "Introduzca el monto el cual va a Retirar"
+											Leer monto
+											Si monto < Corrientes[i] Entonces
+												comision<-monto*0.00003
+												total<-Corrientes[i] - (monto + comision)
+												Corrientes[i]<-total
+												Imprimir "Operacion Exitosa"
+												Imprimir "Su saldo actual en Su Cuenta Corriente es: " Corrientes[i]
+												Escribir "¿Desea realizar otro retiro? [S/N]"
+												leer consulta
+											SiNo
+												Imprimir "El monto que Ud. ha introducido es mayor al monto que posee, por favor verifique"
+											FinSi
+										2:
+											Imprimir "Cliente: " , Nombres[i] , "			" , "Cédula: " , ID[i]
+											Escribir "Introduzca el monto el cual va a Retirar"
+											Leer monto
+											Si monto < Ahorros[i] Entonces
+												comision<-monto*0.00003
+												total<-Ahorros[i] - (monto + comision)
+												Ahorros[i]<-total
+												Imprimir "Operacion Exitosa"
+												Imprimir "Su saldo actual en Su Cuenta de Ahorro es: " Ahorros[i]
+												Escribir "¿Desea realizar otro retiro? [S/N]"
+												leer consulta
+											SiNo
+												Imprimir "El monto que Ud. ha introducido es mayor al monto que posee, por favor verifique"
+												salir<-'s'
+											FinSi
+									Fin Segun
+								FinSi
 							4:	
 								Imprimir "Saliendo..."
 								salir<-'s'
@@ -125,7 +234,6 @@ Algoritmo Banco
 						Fin Segun
 					SiNo
 						Imprimir "Nombre o Contraseña erroneos, intente nuevamente"
-						
 					FinSi
 				intento<- intento + 1	
 				FinSi
